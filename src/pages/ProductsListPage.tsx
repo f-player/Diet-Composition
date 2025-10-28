@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Row, Col, Spinner, Form, Badge, Image, Button } from 'react-bootstrap'; // 1. Добавляем Button
+import { Container, Row, Col, Spinner, Form, Badge, Image, Button } from 'react-bootstrap';
 import { ProductCard } from '../components/ProductCard';
 import { getProducts } from '../api/productsApi';
 import type { IProduct } from '../types';
@@ -10,28 +10,38 @@ export const ProductsListPage = () => {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [cartCount, setCartCount] = useState(1);
+    const [searchTrigger, setSearchTrigger] = useState(0); // Триггер для поиска
 
- const fetchProducts = (filterTitle: string) => {
-    setLoading(true);
-    getProducts(filterTitle)
-        .then(data => {
-            if (Array.isArray(data.items)) {
-                setProducts(data.items);
-            } else {
-                console.error("Получены неверные данные:", data);
-                setProducts([]);
-            }
-        })
-        .finally(() => setLoading(false));
+    const fetchProducts = (filterTitle: string) => {
+        setLoading(true);
+        getProducts(filterTitle)
+            .then(data => {
+                if (Array.isArray(data.items)) {
+                    setProducts(data.items);
+                } else {
+                    console.error("Получены неверные данные:", data);
+                    setProducts([]);
+                }
+            })
+            .finally(() => setLoading(false));
     };
 
+    // Загрузка продуктов при первом рендере и при срабатывании поиска
     useEffect(() => {
-        fetchProducts('');
-    }, []);
+        fetchProducts(searchTerm);
+    }, [searchTrigger]); 
 
+    // Обработчик поиска по кнопке
     const handleSearchSubmit = (event: React.FormEvent) => {
         event.preventDefault(); 
-        fetchProducts(searchTerm);
+        
+        setSearchTrigger(prev => prev + 1);
+    };
+
+    // Обработчик сброса поиска
+    const handleClearSearch = () => {
+        setSearchTerm('');
+        setSearchTrigger(prev => prev + 1); 
     };
 
     return (
@@ -52,6 +62,15 @@ export const ProductsListPage = () => {
                             <Button variant="danger" type="submit" disabled={loading}>
                                 {loading ? 'Поиск...' : 'Искать'}
                             </Button>
+                            {searchTerm && (
+                                <Button 
+                                    variant="outline-secondary" 
+                                    onClick={handleClearSearch}
+                                    disabled={loading}
+                                >
+                                    Сбросить
+                                </Button>
+                            )}
                             <div className="cart-wrapper">
                                 <Image src="http://127.0.0.1:9000/imagegroup/cart.png" alt="Корзина" width={32} />
                                 {/* {cartCount > 0 && (
