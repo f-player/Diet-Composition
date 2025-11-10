@@ -1,0 +1,60 @@
+.px-6 {
+  padding-left: 4.5rem !important;
+  padding-right: 4.5rem !important;
+}
+
+.px-7 {
+  padding-left: 6rem !important;
+  padding-right: 6rem !important;
+}
+
+.navbar.bg-danger {
+    background-color: #B0EDFF !important; 
+}
+
+.navbar-dark .nav-link {
+    transition: color 0.1s ease-in-out, transform 0.1s ease-in-out;
+}
+
+.navbar-dark .nav-link:hover,
+.navbar-dark .nav-link:focus,
+.navbar-dark .nav-link.active {
+    color: #FFFFFF !important;
+    transform: scale(1.05);
+}
+
+.cart-indicator {
+    background-color: #87CEFA !important;
+}
+
+.btn-danger {
+    background-color: #87CEFA !important;
+    border-color: #87CEFA !important;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active {
+    background-color: #87CEFA !important;
+    border-color: #87CEFA !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
