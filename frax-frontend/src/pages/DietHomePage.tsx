@@ -7,10 +7,10 @@ export const HomePage = () => {
     
     // Массив фоновых изображений
     const backgroundImages = [
-        'http://127.0.0.1:9000/imagegroup/one.webp',
-        'http://127.0.0.1:9000/imagegroup/two.webp', 
-        'http://127.0.0.1:9000/imagegroup/three.webp',
-        'http://127.0.0.1:9000/imagegroup/four.webp',
+        'background/one.webp',
+        'background/two.webp', 
+        'background/three.webp',
+        'background/four.webp',
     ];
 
     // Автопереключение карусели
