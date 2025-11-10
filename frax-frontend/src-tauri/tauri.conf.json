@@ -11,15 +11,15 @@
   "app": {
     "windows": [
       {
-        "title": "frax-frontend",
-        "width": 800,
-        "height": 600,
+        "title": "Diet Composition Calculator",
+        "width": 1200,
+        "height": 800,
         "resizable": true,
         "fullscreen": false
       }
     ],
     "security": {
-      "csp": null
+      "csp": "default-src 'self' http://127.0.0.1:8080 http://localhost:8080; connect-src 'self' http://127.0.0.1:8080 http://localhost:8080"
     }
   },
   "bundle": {
@@ -34,7 +34,7 @@
   },
   "plugins": {
     "http": {
-      "scope": ["http://127.0.0.1:*"],
+      "scope": ["http://127.0.0.1:8080/**", "http://localhost:8080/**"],
       "dangerousAcceptAnyServerCertificate": true
     }
   }
