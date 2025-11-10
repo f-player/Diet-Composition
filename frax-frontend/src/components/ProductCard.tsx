@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import type { IProduct } from '../types';
 import './styles/ProductCard.css'
 
-export const DefaultImage = `mock_images/default.png`;
+export const DefaultImage = `mock_images/default.webp`;
 
 interface ProductCardProps {
     product: IProduct;
