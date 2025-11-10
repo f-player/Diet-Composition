@@ -7,7 +7,7 @@ import mkcert from 'vite-plugin-mkcert'
 
 export default defineConfig(({ command }) => {
     const base = command === 'build'
-      ? '/LAB6/' 
+      ? '/Diet-Composition/' 
       : '/'; 
     return {
       base: base, 

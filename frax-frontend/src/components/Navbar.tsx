@@ -7,7 +7,7 @@ export const AppNavbar = () => {
             <Container fluid className='px-7'>
                 <Navbar.Brand as={Link} to="/">
                     <img 
-                        src="http://127.0.0.1:9000/imagegroup/image.png" 
+                        src="mock_images/image.png" 
                         alt="Diet Composition Calculator"
                         height="40"
                         className="d-inline-block align-top"
