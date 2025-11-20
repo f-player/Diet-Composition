@@ -19,7 +19,7 @@
       }
     ],
     "security": {
-      "csp": "default-src 'self' http://127.0.0.1:8080 http://localhost:8080; connect-src 'self' http://127.0.0.1:8080 http://localhost:8080"
+      "csp": "default-src 'self' http://79.127.211.218:8080 http://localhost:8080; connect-src 'self' http://79.127.211.218:8080 http://localhost:8080"
     }
   },
   "bundle": {
@@ -34,7 +34,7 @@
   },
   "plugins": {
     "http": {
-      "scope": ["http://127.0.0.1:8080/**", "http://localhost:8080/**"],
+      "scope": ["http://79.127.211.218:8080/**", "http://localhost:8080/**"],
       "dangerousAcceptAnyServerCertificate": true
     }
   }
