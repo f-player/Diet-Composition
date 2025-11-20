@@ -2,17 +2,40 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  width: 100vw; 
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+}
+
+.homepage-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 25% 25%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(118, 75, 162, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(240, 147, 251, 0.05) 0%, transparent 70%);
+  z-index: 1;
+  pointer-events: none;
 }
 
 .homepage-wrapper header {
-  position: absolute; 
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 10;
-  background: transparent !important; 
-  text-shadow: 0 1px 3px #707070;
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.homepage-wrapper header:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
 }
 
 .home-page-container {
@@ -23,9 +46,10 @@
     align-items: center;
     overflow: hidden;
     color: white;
+    z-index: 2;
 }
 
-/* Карусель */
+/* Карусель с улучшенными эффектами */
 .carousel-background {
     position: absolute;
     top: 0;
@@ -45,14 +69,16 @@
     background-position: center;
     background-repeat: no-repeat;
     opacity: 0;
-    transition: opacity 1s ease-in-out;
+    transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1.1);
 }
 
 .carousel-slide.active {
     opacity: 1;
+    transform: scale(1);
 }
 
-/* Затемнение фона для лучшей читаемости текста */
+/* Улучшенное затемнение с градиентом */
 .home-page-container::after {
     content: '';
     position: absolute;
@@ -60,34 +86,135 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.3) 0%,
-        rgba(0, 0, 0, 0.4) 50%,
-        rgba(0, 0, 0, 0.5) 100%
-    );
+    background: 
+        linear-gradient(135deg, 
+            rgba(102, 126, 234, 0.3) 0%,
+            rgba(118, 75, 162, 0.4) 50%,
+            rgba(240, 147, 251, 0.3) 100%
+        ),
+        linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.2) 0%,
+            rgba(0, 0, 0, 0.3) 50%,
+            rgba(0, 0, 0, 0.4) 100%
+        );
     z-index: 0;
 }
 
 .home-page-content {
     text-align: center;
-    z-index: 1;
-    padding: 2rem;
+    z-index: 3;
+    padding: 3rem;
     position: relative;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .home-page-content h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    font-weight: 700;
+    font-size: 4rem;
+    margin-bottom: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 50%, #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    position: relative;
+}
+
+.home-page-content h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 4px;
+    background: linear-gradient(90deg, #f093fb 0%, #f5576c 50%, #667eea 100%);
+    border-radius: 2px;
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+        transform: translateX(-50%) scale(1.1);
+    }
 }
 
 .home-page-content .lead {
-    font-size: 1.5rem;
-    max-width: 1000px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-    line-height: 1.6;
+    font-size: 1.4rem;
+    max-width: 800px;
+    margin: 0 auto;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    line-height: 1.8;
+    font-weight: 300;
+    opacity: 0.95;
+}
+
+/* Кнопки действий */
+.home-cta-buttons {
+    margin-top: 3rem;
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.home-cta-btn {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.home-cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.6s;
+}
+
+.home-cta-btn:hover::before {
+    left: 100%;
+}
+
+.home-cta-btn:hover {
+    transform: translateY(-5px) scale(1.05);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.2) 100%);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
+}
+
+.home-cta-btn {
+    white-space: nowrap;
+    text-align: center !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 180px;
 }
 
 /* Кнопки навигации карусели */
@@ -95,64 +222,115 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     color: white;
-    font-size: 2rem;
-    width: 50px;
-    height: 50px;
+    font-size: 1.5rem;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     cursor: pointer;
-    z-index: 2;
-    transition: all 0.3s ease;
+    z-index: 10;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+}
+
+.carousel-btn:hover::before {
+    opacity: 1;
 }
 
 .carousel-btn:hover {
-    background: rgba(255, 255, 255, 0.4);
-    transform: translateY(-50%) scale(1.1);
+    transform: translateY(-50%) scale(1.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 15px 50px rgba(102, 126, 234, 0.3);
 }
 
 .carousel-btn-prev {
-    left: 20px;
+    left: 30px;
 }
 
 .carousel-btn-next {
-    right: 20px;
+    right: 30px;
 }
 
 /* Индикаторы карусели */
 .carousel-indicators {
     position: absolute;
-    bottom: 30px;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 12px;
-    z-index: 2;
+    gap: 16px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .carousel-indicator {
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    border: 2px solid white;
+    border: 2px solid rgba(255, 255, 255, 0.6);
     background: transparent;
     cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-indicator::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    border-radius: 50%;
     transition: all 0.3s ease;
 }
 
+.carousel-indicator.active::before {
+    width: 100%;
+    height: 100%;
+}
+
 .carousel-indicator.active {
-    background: white;
-    transform: scale(1.2);
+    border-color: white;
+    transform: scale(1.3);
+    box-shadow: 0 0 20px rgba(240, 147, 251, 0.6);
 }
 
 .carousel-indicator:hover {
-    background: rgba(255, 255, 255, 0.7);
-    transform: scale(1.1);
+    transform: scale(1.2);
+    border-color: rgba(255, 255, 255, 0.8);
+}
+
+.carousel-indicator:hover::before {
+    width: 60%;
+    height: 60%;
 }
 
 /* Анимация появления контента */

@@ -18,8 +18,8 @@ export default defineConfig(({ command }) => {
           registerType: 'autoUpdate',
           devOptions: { enabled: true },
           manifest: {
-            name: "DIET Calculator",
-            short_name: "DIET",
+            name: "Калькулятор Диеты",
+            short_name: "Диета",
             description: "Сервис для расчета диеты по изотопному анализу.",
             start_url: ".",
             display: "standalone",

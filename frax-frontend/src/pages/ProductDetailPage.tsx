@@ -27,7 +27,10 @@ export const ProductDetailPage = () => {
     if (loading) {
         return (
             <div className="product-detail-page">
-                <Spinner animation="border" variant="danger" style={{ width: '3rem', height: '3rem' }} />
+                <Container className="text-center">
+                    <Spinner animation="border" variant="danger" style={{ width: '3rem', height: '3rem' }} />
+                    <p className="mt-3 text-muted">Загрузка продукта...</p>
+                </Container>
             </div>
         );
     }
@@ -35,16 +38,16 @@ export const ProductDetailPage = () => {
     if (!product) {
         return (
             <Container className="mt-5 pt-5 text-center">
-                <h2>Product not found</h2>
+                <h2>Продукт не найден</h2>
                 <Link to="/products">
-                    <Button variant="outline-danger" className="mt-3">Go back to the list</Button>
+                    <Button variant="outline-danger" className="mt-3">Вернуться к списку</Button>
                 </Link>
             </Container>
         );
     }
 
     const breadcrumbs = [
-        { label: 'Products', path: '/products' },
+        { label: 'Продукты', path: '/products' },
         { label: product.title, active: true },
     ];
 
@@ -62,10 +65,8 @@ export const ProductDetailPage = () => {
                         </div>
                     </Col>
                     <Col lg={7}>
-                        <h1 className="display-5 product-title">{product.title}</h1>            
-                        <Button className='all-btn mt-4 px-4 py-2' variant="danger" size="lg">
-                            Add to the calculation
-                        </Button>
+                        <h1 className="display-5 product-title">{product.title}</h1>
+
                     </Col>
                 </Row>
             </div>

@@ -1,5 +1,6 @@
 import { AppNavbar } from '../components/Navbar';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './styles/DietHomePage.css';
 
 export const HomePage = () => {
@@ -59,8 +60,8 @@ export const HomePage = () => {
 
                 {/* Контент поверх карусели */}
                 <div className="home-page-content">
-                    <h1>Welcome to the Diet Composition Calculator!</h1>
-                    <p className="lead fs-4">This service is designed to reconstruct an individual's diet based on isotopic analysis.</p>
+                    <h1>Добро пожаловать в Калькулятор Состава Диеты!</h1>
+                    <p className="lead fs-4">Этот сервис предназначен для восстановления рациона питания человека на основе изотопного анализа.</p>
                 </div>
 
                 {/* Кнопки навигации */}

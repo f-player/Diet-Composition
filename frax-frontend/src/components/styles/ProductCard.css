@@ -1,9 +1,119 @@
 .product-card {
-    transition: transform 0.2s ease;
+    position: relative;
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    background: linear-gradient(145deg, #ffffff 0%, #f8f9ff 100%);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: 0 8px 32px rgba(102, 126, 234, 0.12);
+    cursor: pointer;
+}
+
+.product-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover::before {
+    transform: scaleX(1);
 }
 
 .product-card:hover {
-   transform: translateY(-10px);
-   box-shadow: 0 8px 16px #707070;
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.25);
+}
+
+.product-card .card-img-top {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .card-img-top {
+    transform: scale(1.1);
+}
+
+.product-card .card-body {
+    padding: 1.5rem;
+    position: relative;
+}
+
+.product-card .card-title {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.product-card .card-text {
+    color: #6c757d;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.product-card .btn {
+    border-radius: 25px;
+    padding: 0.75rem 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    font-size: 0.9rem;
+}
+
+.product-card .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+}
+
+.product-card .btn:hover::before {
+    left: 100%;
+}
+
+/* Специальные эффекты для разных типов карточек */
+.product-card.featured {
+    background: linear-gradient(145deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.product-card.featured .card-title,
+.product-card.featured .card-text {
+    color: white;
+}
+
+.product-card.new::after {
+    content: 'NEW';
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 

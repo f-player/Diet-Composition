@@ -47,9 +47,11 @@ export const ProductsListPage = () => {
     const isCartActive = cartBadge.count > 0 && cartBadge.diet_id !== null;
 
     return (
-        <Container fluid className="pt-5 mt-4"> 
-            <h1 className="text-center fs-3 fw-bold">Products</h1>
-            <hr className="products-header-line" />
+        <Container fluid className="pt-5 mt-4 products-page"> 
+            <div className="products-header">
+                <h1 className="text-center fs-3 fw-bold">Каталог Продуктов</h1>
+                <hr className="products-header-line" />
+            </div>
 
             <Form onSubmit={handleSearchSubmit}>
                 <Row className="justify-content-center mb-4">
@@ -57,12 +59,12 @@ export const ProductsListPage = () => {
                         <div className="search-and-cart-wrapper">
                                 <Form.Control
                                     type="search"
-                                    placeholder="Enter the product name to search for..."
+                                    placeholder="Введите название продукта для поиска..."
                                     value={searchTerm}
                                     onChange={(e) => dispatch(setSearchTerm(e.target.value))}
                                 />
-                            <Button variant="danger" type="submit" disabled={loading}>
-                                {loading ? 'Search...' : 'Search'}
+                            <Button variant="danger" type="submit" disabled={loading} className="all-btn">
+                                {loading ? 'Поиск...' : 'Найти'}
                             </Button>
                             <div className="cart-wrapper">
                                 {isCartActive ? (                               
@@ -70,15 +72,15 @@ export const ProductsListPage = () => {
                                         href="#" 
                                         onClick={(e) => {
                                             e.preventDefault();
-                                            alert(`Go to the application page (ID: ${cartBadge.diet_id}) will be implemented.`);
+                                            alert(`Переход к странице приложения (ID: ${cartBadge.diet_id}) будет реализован.`);
                                         }}
-                                        title="Go to the application"
+                                        title="Перейти к приложению"
                                     >
-                                        <Image src={cartImage} alt="Basket" width={32} />
+                                        <Image src={cartImage} alt="Корзина" width={32} />
                                     </a>
                                 ) : (                                  
                                     <div style={{ cursor: 'not-allowed' }}>
-                                        <Image src={cartImage} alt="Basket" width={32} style={{ opacity: 0.5 }} />
+                                        <Image src={cartImage} alt="Корзина" width={32} style={{ opacity: 0.5 }} />
                                     </div>
                                 )}                               
                                 {isCartActive && (
@@ -93,17 +95,18 @@ export const ProductsListPage = () => {
             </Form>
 
             {loading ? (
-                <div className="text-center"><Spinner animation="border" variant="danger" /></div>
+                <div className="text-center">
+                    <Spinner animation="border" variant="danger" />
+                    <p className="mt-3 text-muted">Загрузка продуктов...</p>
+                </div>
             ) : (
                 <Row className="justify-content-center">
                     <Col xs={12} lg={10}>
-                        <Row xs={1} md={2} lg={3} className="g-4">
+                        <div className="products-grid">
                             {products.map(product => (
-                                <Col key={product.id}>
-                                    <ProductCard product={product} />
-                                </Col>
+                                <ProductCard key={product.id} product={product} />
                             ))}
-                        </Row>
+                        </div>
                     </Col>
                 </Row>
             )}

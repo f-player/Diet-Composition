@@ -11,7 +11,7 @@ interface BreadcrumbsProps {
 }
 
 export const CustomBreadcrumbs: React.FC<BreadcrumbsProps> = ({ crumbs }) => {
-  const allCrumbs = [{ label: 'Main', path: '/' }, ...crumbs];
+  const allCrumbs = [{ label: 'Главная', path: '/' }, ...crumbs];
   return (
     <nav className="modern-breadcrumbs" aria-label="breadcrumb">
       {allCrumbs.map((crumb, index) => (

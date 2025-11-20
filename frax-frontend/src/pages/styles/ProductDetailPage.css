@@ -1,89 +1,278 @@
 /* Основной контейнер страницы */
 .product-detail-page {
-    display: flex;
-    align-items: center; 
-    justify-content: center;
-    min-height: 100vh; 
-    padding-top: 56px;
-    box-sizing: border-box;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    padding: 2rem 0;
     position: relative;
     overflow: hidden;
 }
 
-/* Размытый фон с картинкой фактора */
-.product-background {
+.product-detail-page::before {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ffffff; 
-    z-index: -1;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(240, 147, 251, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.product-detail-container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
 }
 
 /* Карточка с контентом */
 .product-content-card {
-    background: rgb(255, 255, 255); 
-    border-radius: 16px;
-    box-shadow: 0 15px 35px #707070; 
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(102, 126, 234, 0.15);
     padding: 3rem;
-    max-width: 900px;
-    width: 90%;
-    margin-top: 60px; 
-    animation: slideUp 0.6s ease-out; 
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+    animation: slideUpFade 0.8s ease-out;
 }
 
-/* Заголовок фактора */
+.product-content-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+}
+
+/* Заголовок продукта */
 .product-title {
     font-weight: 800;
-    color: #212529;
-    margin-bottom: 1.5rem;
+    font-size: 3rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 2rem;
     position: relative;
-    padding-bottom: 1rem;
+    animation: slideInLeft 0.8s ease-out 0.2s both;
 }
 
-/* Декоративная линия под заголовком */
 .product-title::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: -10px;
     left: 0;
-    width: 60px;
+    width: 100px;
     height: 4px;
-    background-color: #B0EDFF; 
+    background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
     border-radius: 2px;
+    animation: expandWidth 1s ease-out 0.8s both;
+}
+
+/* Контент продукта */
+.product-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
 }
 
 /* Текст описания */
 .product-text {
-    font-size: 1.1rem;
-    line-height: 1.7;
+    font-size: 1.2rem;
+    line-height: 1.8;
     color: #495057;
+    animation: slideInLeft 0.8s ease-out 0.4s both;
 }
 
-/* Изображение фактора внутри карточки */
+.product-text p {
+    margin-bottom: 1.5rem;
+}
+
+.product-text p:first-child {
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+/* Изображение продукта */
 .product-image-wrapper {
-    box-shadow: 0 8px 20px #707070;
-    border-radius: 12px;
+    position: relative;
+    border-radius: 20px;
     overflow: hidden;
-    transition: transform 0.3s ease;
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: slideInRight 0.8s ease-out 0.6s both;
+}
+
+.product-image-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+        rgba(102, 126, 234, 0.1) 0%, 
+        rgba(118, 75, 162, 0.1) 50%, 
+        rgba(240, 147, 251, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.product-image-wrapper:hover::before {
+    opacity: 1;
 }
 
 .product-image-wrapper:hover {
-    transform: scale(1.02);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 25px 60px rgba(102, 126, 234, 0.3);
 }
 
 .product-main-image {
     width: 100%;
-    height: auto;
-    display: block;
+    height: 300px;
     object-fit: cover;
-    pointer-events: none; 
-    user-select: none;
-}  
+    display: block;
+    transition: transform 0.3s ease;
+}
 
-/* Анимация появления карточки снизу вверх */
-@keyframes slideUp {
+.product-image-wrapper:hover .product-main-image {
+    transform: scale(1.05);
+}
+
+/* Кнопки действий */
+.product-actions {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+    animation: slideInUp 0.8s ease-out 0.8s both;
+}
+
+.product-actions .btn {
+    white-space: nowrap;
+    text-align: center !important;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 200px;
+    padding: 1rem 2rem;
+}
+
+.product-actions .btn {
+    border-radius: 50px;
+    padding: 1rem 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.product-actions .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+}
+
+.product-actions .btn:hover::before {
+    left: 100%;
+}
+
+.product-actions .btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Информационные блоки */
+.product-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+    animation: slideInUp 0.8s ease-out 1s both;
+}
+
+.product-info-item {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.product-info-item:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.product-info-item h6 {
+    color: #667eea;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.product-info-item p {
+    color: #2c3e50;
+    font-weight: 500;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* Анимации */
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInUp {
     from {
         opacity: 0;
         transform: translateY(30px);
@@ -94,23 +283,46 @@
     }
 }
 
+@keyframes expandWidth {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100px;
+    }
+}
 
+/* Респонсивность */
 @media (max-width: 768px) {
+    .product-detail-container {
+        padding: 1rem;
+    }
+    
     .product-content-card {
-        padding: 20px;
+        padding: 2rem 1.5rem;
     }
 
     .product-title {
-        font-size: 2.5rem; /* Уменьшаем заголовок */
+        font-size: 2rem;
         text-align: center;
     }
 
-    .product-text p {
+    .product-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .product-text {
         font-size: 1rem;
         text-align: center;
     }
 
-    .product-content-card .row {
-        text-align: center; /* Центрируем кнопку */
+    .product-actions {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .product-info-grid {
+        grid-template-columns: 1fr;
     }
 }
