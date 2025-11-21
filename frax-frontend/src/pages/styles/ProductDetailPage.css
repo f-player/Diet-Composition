@@ -112,6 +112,7 @@
     box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     animation: slideInRight 0.8s ease-out 0.6s both;
+    
 }
 
 .product-image-wrapper::before {

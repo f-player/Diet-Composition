@@ -1,8 +1,8 @@
 // src/config.ts
 
 // IP вашего Go бэкенда.
-const BACKEND_IP = 'http://156.146.33.99:8080'; 
-const MINIO_IP = 'http://156.146.33.99:9000';
+const BACKEND_IP = 'http://213.87.150.177:8080'; 
+const MINIO_IP = 'http://213.87.150.177:9000';
 
 // ЭКСПОРТИРУЕМ ФУНКЦИЮ
 export const getApiBase = (): string => {

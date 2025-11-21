@@ -1,6 +1,5 @@
 import { AppNavbar } from '../components/Navbar';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import './styles/DietHomePage.css';
 
 export const HomePage = () => {
