@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Список факторов</title>
+    <link rel="stylesheet" href="/resources/styles/main.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">FRAXCALCULATOR.ORG</div>
+    </header>
+
+    <div class="header-text">Факторы риска</div>
+    <div class="header-line"></div>
+
+    <div class="search-container">
+        <div class="search-wrapper">
+            <form action="/FRAX" method="GET">
+                <input class="search-input" type="text" name="searchingFactors" placeholder="Введите запрос" value="{{ .factorsSearch }}">
+            </form>
+            <div class="cart-container">
+                {{ if gt .factorsCount 0 }}
+                    <a class="cart-button" href="/frax/{{ .fraxID }}">
+                        <img src="http://localhost:9000/factors/Images/Корзина.png" alt="Корзина">
+                    </a>
+                    <div class="cart-indicator">{{.factorsCount}}</div>
+                {{ else }}
+                    <a class="cart-button" style="cursor: not-allowed;">
+                         <img src="http://localhost:9000/factors/Images/Корзина.png" alt="Корзина" style="opacity: 0.5;">
+                    </a>
+                {{ end }}
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        {{range .factors}}
+        <div class="card">
+            <img class="card-img" src="{{.Image}}" alt="">
+            <div class="card-content card-content-for-factors">
+                <p class="card-title">{{.Title}}</p>
+                <div style="display: flex; gap: 10px;">
+                    <a class="card-button" href="/factor/{{ .ID }}">Подробнее</a>
+                    <form action="/frax/add/factor/{{ .ID }}" method="POST">
+                        <button class="card-button" type="submit">Добавить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {{end}}
+    </div>
+
+</body>
+</html>

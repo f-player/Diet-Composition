@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.11.0",
+    "@vitejs/plugin-react": "^5.1.1",
+    "docs": "^0.3.2-canary.0",
+    "react": "^19.2.0",
+    "react-bootstrap": "^2.10.10",
+    "react-bootstrap-icons": "^1.11.6",
+    "react-dom": "^19.2.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.9.6",
+    "vite": "^7.2.4",
+    "vite-plugin-mkcert": "^1.17.9",
+    "vite-plugin-pwa": "^1.1.0"
+  }
+}
