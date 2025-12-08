@@ -5,6 +5,7 @@ import { DefaultImage } from '../components/ProductCard';
 import { CustomBreadcrumbs } from '../components/Breadcrumbs';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProductById, clearCurrentProduct } from '../store/slices/productsSlice';
+import { getImageUrl } from '../utils/imageUrl';
 import type { RootState, AppDispatch } from '../store';
 import './styles/ProductDetailPage.css';
 
@@ -14,7 +15,7 @@ export const ProductDetailPage = () => {
     const { id } = useParams<{ id: string }>();
     const dispatch = useDispatch<AppDispatch>();
     const { currentProduct: product, loading } = useSelector((state: RootState) => state.products);
-    const displayImage = product?.image || DefaultImage;
+    const displayImage = getImageUrl(product?.image);
 
     useEffect(() => {
         if (id) {

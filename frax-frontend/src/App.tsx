@@ -8,6 +8,12 @@ import { RegisterPage } from './pages/RegisterPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { OrdersListPage } from './pages/OrdersListPage';
 import { OrderPage } from './pages/OrderPage';
+import ModeratorDashboard from './pages/ModeratorDashboard';
+import ServicesEditor from './pages/ServicesEditor';
+import RequestsModeratorPage from './pages/RequestsModeratorPage';
+import Error403 from './pages/Error403';
+import Error404 from './pages/Error404';
+import RequireModerator from './components/RequireModerator';
 
 
 
@@ -33,7 +39,14 @@ function App() {
             <Route path="/profile" element={<ProfilePage />} /> 
             <Route path="/orders" element={<OrdersListPage />} />
             <Route path="/orders/:id" element={<OrderPage />} />
+            {/* Moderator routes inside MainLayout so navbar is visible */}
+            <Route path="/moderator" element={<RequireModerator><ModeratorDashboard /></RequireModerator>} />
+            <Route path="/moderator/services" element={<RequireModerator><ServicesEditor /></RequireModerator>} />
+            <Route path="/moderator/requests" element={<RequireModerator><RequestsModeratorPage /></RequireModerator>} />
         </Route>
+
+                <Route path="/403" element={<Error403 />} />
+                <Route path="*" element={<Error404 />} />
       </Routes>
     </BrowserRouter>
     );

@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addProductToDraft } from '../store/slices/cartSlice';
 import type { RootState, AppDispatch } from '../store';
 import type { ProductCardProps } from '../types';
+import { getImageUrl } from '../utils/imageUrl';
 import './styles/ProductCard.css'
 
 
@@ -25,7 +26,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="p-4 border rounded shadow-sm h-100 bg-light product-card">
             <Row className="align-items-center">
                 <Col xs={4} md={3}>
-                    <img src={product.image || DefaultImage} alt={product.title} className="img-fluid"/>
+                    <img src={getImageUrl(product.image)} alt={product.title} className="img-fluid"/>
                 </Col>
                 <Col xs={8} md={9}>
                     <div className="d-flex flex-column justify-content-between h-100">

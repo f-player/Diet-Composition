@@ -7,7 +7,7 @@ import process from 'process';
 generateApi({
   name: 'Api.ts',
   output: resolve(process.cwd(), './src/api'),
-  url: 'http://localhost:8090/swagger/doc.json', 
+  url: 'http://192.168.0.153:8090/swagger/doc.json', 
   httpClientType: 'axios',
   generateClient: true,
   generateResponses: true,

@@ -26,6 +26,8 @@ services:
   minio1:
     <<: *minio-common
     hostname: minio1
+    ports:
+      - "9000:9000"
     volumes:
       - data1-1:/data1
       - data1-2:/data2
@@ -56,9 +58,14 @@ services:
     hostname: nginx
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      # Mount a stable host folder for certificates. Create C:\letsencrypt on the
+      # Windows host and acme.sh (running in WSL or Git Bash) can install files
+      # there. Nginx will read from /etc/nginx/certs.
+      - C:/letsencrypt:/etc/nginx/certs:ro
+      - ./letsencrypt:/etc/letsencrypt:ro
     ports:
-      - "9000:9000"
-      - "9001:9001"
+      - "80:80"
+      - "443:443"
     depends_on:
       - minio1
       - minio2
@@ -76,3 +83,9 @@ volumes:
   data3-2:
   data4-1:
   data4-2:
+
+networks:
+  docker-postgres_default:
+    external: true
+  docker-redis_default:
+    external: true

@@ -17,6 +17,8 @@ export const ProductsListPage = () => {
     const { items: products, loading } = useSelector((state: RootState) => state.products);
     const searchTerm = useSelector((state: RootState) => state.filter.searchTerm);
     const cartState = useSelector((state: RootState) => state.cart);
+    const currentUser = useSelector((state: RootState) => state.user.user);
+    const isModerator = !!currentUser?.moderator;
     const isCartActive = cartState.count > 0 && cartState.diet_id !== null;
 
     useEffect(() => {
@@ -41,6 +43,11 @@ export const ProductsListPage = () => {
             <div className="mt-5 mb-4">
                 <h1 className="text-center fs-2 fw-bold mb-4">Каталог продуктов</h1>
                 <hr className="products-header-line mx-auto" />
+                {isModerator && (
+                    <div className="text-center mb-3">
+                        <Button variant="outline-danger" onClick={() => navigate('/moderator/services')}>Открыть редактор услуг</Button>
+                    </div>
+                )}
             </div>
 
             <Form onSubmit={handleSearchSubmit}>

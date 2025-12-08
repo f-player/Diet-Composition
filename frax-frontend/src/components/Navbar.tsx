@@ -55,9 +55,11 @@ export const AppNavbar = () => {
 
                         {isAuthenticated ? (
                             <>
-                                <Nav.Link as={Link} to="/orders" className="text-white">
+                                                                <Nav.Link as={Link} to="/orders" className="text-white">
                                     Мои заявки
                                 </Nav.Link>
+
+                                                                {/* Панель модератора убрана: доступ к редактору услуг через страницу продуктов */}
 
                                 <div className="text-white mx-2 d-none d-lg-block">|</div>
 

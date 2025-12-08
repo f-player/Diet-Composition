@@ -14,6 +14,7 @@ import {
     clearCurrentOrder
 } from '../store/slices/dietSlice';
 import { Trash, CheckCircleFill, ExclamationCircle } from 'react-bootstrap-icons';
+import { getImageUrl } from '../utils/imageUrl';
 import type { AppDispatch, RootState } from '../store';
 
 
@@ -214,7 +215,7 @@ const [descriptions, setDescriptions] = useState<{[key: number]: string}>({});
                             <Row className="g-0">
                                 <Col md={4} className="d-flex align-items-center p-3 border-end">
                                     <div className="me-3" style={{ width: 60 }}>
-                                        <Image src={f.image || DefaultImage} fluid rounded />
+                                        <Image src={getImageUrl(f.image)} fluid rounded />
                                     </div>
                                     <div className="flex-grow-1">
                                         <h6 className="fw-bold mb-2">{f.title}</h6>

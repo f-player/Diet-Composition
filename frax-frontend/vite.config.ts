@@ -32,10 +32,12 @@ export default defineConfig({
 
   ],
   server: {
+    host: '0.0.0.0',
+    strictPort: false,
     port: 3000,
     proxy: {
       '/api': {
-        target: 'http://localhost:8090',
+        target: 'http://192.168.0.153:8090',
         changeOrigin: true,
       },
     },

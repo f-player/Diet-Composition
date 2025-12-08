@@ -185,7 +185,11 @@ func (r *Repository) UploadProductImage(productID uint, fileHeader *multipart.Fi
 			oldImageURL, err := url.Parse(*product.Image)
 			if err == nil {
 				oldObjectName := strings.TrimPrefix(oldImageURL.Path, fmt.Sprintf("/%s/", r.bucketName))
-				r.minioClient.RemoveObject(context.Background(), r.bucketName, oldObjectName, minio.RemoveObjectOptions{})
+				// Try to remove old object, but handle errors gracefully
+				if err := r.minioClient.RemoveObject(context.Background(), r.bucketName, oldObjectName, minio.RemoveObjectOptions{}); err != nil {
+					// log and continue - do not fail the transaction due to MinIO delete error
+					log.Printf("WARN: failed to remove old image %s: %v", oldObjectName, err)
+				}
 			}
 		}
 
