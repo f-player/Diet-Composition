@@ -55,11 +55,18 @@ export const AppNavbar = () => {
 
                         {isAuthenticated ? (
                             <>
-                                                                <Nav.Link as={Link} to="/orders" className="text-white">
+                                <Nav.Link as={Link} to="/orders" className="text-white">
                                     Мои заявки
                                 </Nav.Link>
 
-                                                                {/* Панель модератора убрана: доступ к редактору услуг через страницу продуктов */}
+                                {user?.moderator && (
+                                    <>
+                                        <div className="text-white mx-2 d-none d-lg-block">|</div>
+                                        <Nav.Link as={Link} to="/moderator/requests" className="text-white fw-bold">
+                                            📋 Панель модератора
+                                        </Nav.Link>
+                                    </>
+                                )}
 
                                 <div className="text-white mx-2 d-none d-lg-block">|</div>
 

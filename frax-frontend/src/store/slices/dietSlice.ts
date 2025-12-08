@@ -220,6 +220,22 @@ const dietSlice = createSlice({
         },
         clearCurrentOrder: (state) => {
             state.currentOrder = null;
+        },
+        updateDietPGP: (state, action) => {
+            // Update PGP in the list
+            const { dietId, pgpValue } = action.payload;
+            console.log(`[Redux] updateDietPGP: dietId=${dietId}, pgpValue=${pgpValue}, list.length=${state.list.length}`);
+            const diet = state.list.find(d => d.id === dietId);
+            if (diet) {
+                console.log(`[Redux] Found diet ${dietId}, updating PGP to ${pgpValue}`);
+                diet.pgp = pgpValue;
+            } else {
+                console.log(`[Redux] Diet ${dietId} not found in list. Available IDs:`, state.list.map(d => d.id));
+            }
+            // Also update current order if it matches
+            if (state.currentOrder && state.currentOrder.id === dietId) {
+                state.currentOrder.pgp = pgpValue;
+            }
         }
     },
     extraReducers: (builder) => {
@@ -264,5 +280,5 @@ const dietSlice = createSlice({
     }
 });
 
-export const { resetOperationSuccess, clearCurrentOrder } = dietSlice.actions;
+export const { resetOperationSuccess, clearCurrentOrder, updateDietPGP } = dietSlice.actions;
 export default dietSlice.reducer;

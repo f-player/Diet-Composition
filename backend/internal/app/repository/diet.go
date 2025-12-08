@@ -328,3 +328,23 @@ func (r *Repository) UpdateMM(dietID, productID uint, updateData ds.ProductToDie
 
 	return r.db.Model(&link).Updates(updates).Error
 }
+
+// PUT /api/diet/:id/update-result - обновить PGP результат от асинхронного сервиса
+func (r *Repository) UpdateDietPGP(dietID uint, pgpValue float64) error {
+	log.Printf("[UpdateDietPGP] Attempting to update diet %d with PGP=%.2f", dietID, pgpValue)
+
+	var diet ds.DietSearching
+	if err := r.db.First(&diet, dietID).Error; err != nil {
+		log.Printf("[UpdateDietPGP] Error finding diet: %v", err)
+		return err
+	}
+
+	// Обновляем PGP значение
+	if err := r.db.Model(&diet).Update("PGP", pgpValue).Error; err != nil {
+		log.Printf("[UpdateDietPGP] Error updating PGP: %v", err)
+		return err
+	}
+
+	log.Printf("[UpdateDietPGP] Diet %d PGP updated to %.2f successfully", dietID, pgpValue)
+	return nil
+}

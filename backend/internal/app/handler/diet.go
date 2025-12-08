@@ -2,6 +2,7 @@ package handler
 
 import (
 	"RIP/internal/app/ds"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -116,7 +117,7 @@ func (h *Handler) GetDiet(c *gin.Context) {
 	var products []ds.ProductInDietDTO
 	for _, link := range diet.ProductsLink {
 		products = append(products, ds.ProductInDietDTO{
-			ProductID:    link.ProductID,
+			ProductID:   link.ProductID,
 			Title:       link.Product.Title,
 			Text:        link.Product.Text,
 			Image:       link.Product.Image,
@@ -138,7 +139,7 @@ func (h *Handler) GetDiet(c *gin.Context) {
 		N_pol:          diet.N_pol,
 		PRP:            diet.PRP,
 		PGP:            diet.PGP,
-		Products:        products,
+		Products:       products,
 	}
 
 	if diet.ModeratorID != nil {
@@ -371,4 +372,71 @@ func (h *Handler) UpdateMM(c *gin.Context) {
 	c.JSON(http.StatusNoContent, gin.H{
 		"message": "Дополнительная информация к продукту обновлена",
 	})
+}
+
+// PUT /api/diet/:id/update-result - получить результат от асинхронного сервиса
+
+// UpdateDietResult godoc
+// @Summary      Получить результат расчета от асинхронного сервиса (без авторизации, с токеном)
+// @Description  Асинхронный сервис отправляет PUT-запрос с результатом расчета (PGP-значением) для конкретной заявки. Требует валидный auth_token.
+// @Tags         diet
+// @Accept       json
+// @Param        id path int true "ID заявки"
+// @Param        resultData body map[string]interface{} true "Данные с результатом: {\"pgp\": <float>, \"auth_token\": \"string\"}"
+// @Success      204 "No Content"
+// @Failure      400 {object} map[string]string "Неверный токен или отсутствуют данные"
+// @Failure      404 {object} map[string]string "Заявка не найдена"
+// @Router       /diet/{id}/update-result [put]
+func (h *Handler) UpdateDietResult(c *gin.Context) {
+	// Константа токена для авторизации асинхронного сервиса
+	const ASYNC_SERVICE_TOKEN = "lab8_key"
+
+	logrus.Printf("[UpdateDietResult] Received PUT request")
+
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		logrus.Printf("[UpdateDietResult] Invalid ID parameter: %v", err)
+		h.errorHandler(c, http.StatusBadRequest, err)
+		return
+	}
+
+	logrus.Printf("[UpdateDietResult] Diet ID: %d", id)
+
+	var req map[string]interface{}
+	if err := c.BindJSON(&req); err != nil {
+		logrus.Printf("[UpdateDietResult] JSON bind error: %v", err)
+		h.errorHandler(c, http.StatusBadRequest, err)
+		return
+	}
+
+	logrus.Printf("[UpdateDietResult] Received payload: %v", req)
+
+	// Проверка токена авторизации
+	authToken, ok := req["auth_token"].(string)
+	if !ok || authToken != ASYNC_SERVICE_TOKEN {
+		logrus.Printf("[UpdateDietResult] Invalid auth_token")
+		h.errorHandler(c, http.StatusUnauthorized, fmt.Errorf("invalid or missing auth_token"))
+		return
+	}
+
+	// Получение PGP значения
+	pgpValue, ok := req["pgp"].(float64)
+	if !ok {
+		logrus.Printf("[UpdateDietResult] Invalid pgp value: %v", req["pgp"])
+		h.errorHandler(c, http.StatusBadRequest, fmt.Errorf("missing or invalid pgp value"))
+		return
+	}
+
+	logrus.Printf("[UpdateDietResult] Updating diet %d with PGP=%.2f", id, pgpValue)
+
+	// Обновление PGP поля в базе данных
+	if err := h.Repository.UpdateDietPGP(uint(id), pgpValue); err != nil {
+		logrus.Printf("[UpdateDietResult] Database error: %v", err)
+		h.errorHandler(c, http.StatusInternalServerError, err)
+		return
+	}
+
+	logrus.Printf("Diet %d PGP updated to %.2f from async service", id, pgpValue)
+
+	c.Status(http.StatusNoContent)
 }

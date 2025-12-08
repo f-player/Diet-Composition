@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { AppNavbar } from './components/Navbar';
 import { HomePage } from './pages/DietHomePage';
 import { ProductsListPage } from './pages/ProductsListPage';
@@ -48,6 +50,7 @@ function App() {
                 <Route path="/403" element={<Error403 />} />
                 <Route path="*" element={<Error404 />} />
       </Routes>
+      <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
     </BrowserRouter>
     );
 }

@@ -64,6 +64,9 @@ func (h *Handler) RegisterAPI(r *gin.RouterGroup) {
 		// Управление заявками (завершение/отклонение)
 		moderator.PUT("/diet/:id/resolve", h.ResolveDiet)
 	}
+
+	// Callback endpoint для асинхронного сервиса (без авторизации, требует токен)
+	r.PUT("/diet/:id/update-result", h.UpdateDietResult)
 }
 
 func (h *Handler) errorHandler(ctx *gin.Context, errorStatusCode int, err error) {
